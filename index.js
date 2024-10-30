@@ -1,5 +1,9 @@
 const express = require('express');
 const connection = require('./db');
+const path = require('path');
+
+
+
 const app = express();
 
 // Encargado de parsear a los json
@@ -122,6 +126,41 @@ app.delete('/api/eliminar/:cedula', (req,res)=>{
 
 
 });
+
+
+// API ACTUALIZAR
+app.put('/api/actualizar/:cedula', (req, res) =>{
+    
+    const {cedula}= req.params;
+
+    const {nombre, edad, profesion} = req.body;
+
+    const query = 'UPDATE persona SET nombre = ?, edad = ?, profesion = ? WHERE cedula = ?';
+
+    connection.query(query, [nombre, edad, profesion, cedula], (error, result)=>{
+
+        if(error){
+            res.status(500).json({
+
+                success: false,
+                message: "Error al actualizar",
+                details: error.message
+               
+            });
+        }else{
+            res.status(200).json({
+
+                success: true,
+                message: "Persona Actualizada",
+              
+            });
+        }
+
+    });
+
+
+});
+
 
 
 
