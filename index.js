@@ -5,6 +5,12 @@ const app = express();
 // Encargado de parsear a los json
 app.use(express.json());
 
+app.use(express.urlencoded({extended:true}));
+
+// Archivos html
+app.use(express.static(path.join(__dirname, 'templates')));
+
+
 
 /*
 // Ruta prueba 
